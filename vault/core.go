@@ -1625,6 +1625,9 @@ func (c *Core) postUnseal() (retErr error) {
 	if err := c.loadIdentityStoreArtifacts(c.activeContext); err != nil {
 		return err
 	}
+	if err := c.loadTokenStoreArtifacts(c.activeContext); err != nil {
+		return err
+	}
 	if err := c.setupAuditedHeadersConfig(c.activeContext); err != nil {
 		return err
 	}

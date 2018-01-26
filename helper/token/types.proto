@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package token;
+
+message TokenMapping {
+	// ID is the storage path identifier of the token
+	string id = 1;
+
+	// Accessor is the secondary identifier of the token
+	string accessor = 2;
+
+	// TokenID is the identifier of the token
+	string token_id = 3;
+
+	// ParentID is the identifier of the token's parent token
+	string parent_id = 4;
+}

@@ -188,7 +188,7 @@ type Request struct {
 	// and the AWS logical backend is mounted at "prod/aws/", then the
 	// final path is "foo" since the mount prefix is trimmed.
 	Path string `sentinel:"" protobuf:"bytes,4,opt,name=path" json:"path,omitempty"`
-	// Request data is a json object that must have keys with string type.
+	// Request data is a JSON object that must have keys with string type.
 	Data string `sentinel:"" protobuf:"bytes,5,opt,name=data" json:"data,omitempty"`
 	// Secret will be non-nil only for Revoke and Renew operations
 	// to represent the secret that was returned prior.
@@ -416,7 +416,7 @@ func (m *Alias) GetName() string {
 
 type Auth struct {
 	LeaseOptions *LeaseOptions `sentinel:"" protobuf:"bytes,1,opt,name=lease_options,json=leaseOptions" json:"lease_options,omitempty"`
-	// InternalData is JSON-encodable data that is stored with the auth struct.
+	// InternalData is a JSON object that is stored with the auth struct.
 	// This will be sent back during a Renew/Revoke for storing internal data
 	// used for those operations.
 	InternalData string `sentinel:"" protobuf:"bytes,2,opt,name=internal_data,json=internalData" json:"internal_data,omitempty"`
@@ -594,7 +594,7 @@ func (m *LeaseOptions) GetIssueTime() *google_protobuf.Timestamp {
 
 type Secret struct {
 	LeaseOptions *LeaseOptions `sentinel:"" protobuf:"bytes,1,opt,name=lease_options,json=leaseOptions" json:"lease_options,omitempty"`
-	// InternalData is JSON objext that is stored with the secret.
+	// InternalData is a JSON object that is stored with the secret.
 	// This will be sent back during a Renew/Revoke for storing internal data
 	// used for those operations.
 	InternalData string `sentinel:"" protobuf:"bytes,2,opt,name=internal_data,json=internalData" json:"internal_data,omitempty"`
@@ -637,7 +637,7 @@ type Response struct {
 	// this response. This is only checked and means something for
 	// credential backends.
 	Auth *Auth `sentinel:"" protobuf:"bytes,2,opt,name=auth" json:"auth,omitempty"`
-	// Response data is JSON object that must have string keys. For
+	// Response data is a JSON object that must have string keys. For
 	// secrets, this data is sent down to the user as-is. To store internal
 	// data that you don't want the user to see, store it in
 	// Secret.InternalData.

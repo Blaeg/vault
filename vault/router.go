@@ -11,6 +11,8 @@ import (
 	"github.com/armon/go-radix"
 	"github.com/hashicorp/vault/helper/salt"
 	"github.com/hashicorp/vault/logical"
+
+	saltpkg "github.com/hashicorp/vault/helper/salt"
 )
 
 // Router is used to do prefix based routing of a request to a logical backend
@@ -80,7 +82,7 @@ func (r *Router) validateMountByAccessor(accessor string) *validateMountResponse
 
 // SaltID is used to apply a salt and hash to an ID to make sure its not reversible
 func (re *routeEntry) SaltID(id string) string {
-	return salt.SaltID(re.mountEntry.UUID, id, salt.SHA1Hash)
+	return salt.SaltID(re.mountEntry.UUID, id, salt.SHA256Hash)
 }
 
 // Mount is used to expose a logical backend at a given prefix, using a unique salt,
@@ -451,7 +453,7 @@ func (r *Router) routeCommon(ctx context.Context, req *logical.Request, existenc
 		if err != nil {
 			return nil, false, false, err
 		}
-		req.ClientToken = re.SaltID(salt.SaltID(req.ClientToken))
+		req.ClientToken = re.SaltID(salt.SaltIDHashFunc(req.ClientToken, saltpkg.SHA256Hash))
 	default:
 		req.ClientToken = re.SaltID(req.ClientToken)
 	}
